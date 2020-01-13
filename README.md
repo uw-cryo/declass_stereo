@@ -2,36 +2,52 @@
 - Repository containing notes and workflows for photogrammetric processing of declassified images
  
 ## Background 
-KeyHole-9 (Hexagon-9) referred by many as an "Engineering Marvel" was one of the last spy satellites launched during the cold war era. KH9 contained a frame mapping pinhole and a pair of stereoscopic panoramic cameras (opticalbar). The ground sampling distance was comparable to the modern day WorldView images (~30 cm, ah!). However, these images were captured on physical films rather than a digital format which have suffered film distorttion in time during storage. Very limited camera model information exists for these images, making direct stereo reconstruction difficult. After declassification, several images were scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earthexplorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates.
+During the cold-war era, the US Government had several spy satellites in orbit, obtaining images all around the globe. There were several generations of the mission, such as Corona (KH-4A,4B) from around 1960s to xxxx, the Hexagon KH-9 from the 1970s to xxxx. These satellites contained contained a frame mapping “pinhole” and a pair of stereoscopic panoramic cameras (opticalbar cameras on board the KH-4A,4B, KH-9). The ground sampling distance for the frame camera images is around 5-8 m/px, while that for the panoramic camera images is ~30 to 50 cm/px (comparable to the modern day commercial DigitalGlobe images). During the operational period, the images were captured/stored on physical films which after declassification are being scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earth Explorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates. The archive on USGS is not exhaustive, and a bulk of imagery still needs to digitally scanned and archived. Several teams have utilised the low resolution frame camera images available on the spacecraft, but the high-resolution panoramic stereo imagery is widely untapped. 
+
+** Figure ** 
+
+Figure 1 Credits (National Reconnaissance Office).
 
 ## Optical Bar Camera Model
-- Optical bar "stereoscopic" cameras onboard the KH-9 mission consisted of 2 rotating cylinders which swept over the ground simultanoeusly giving 2 panaromic snapshots at different perspectives with an overlap of ~x%, swath of x... km. Once the films in the rolling cylinders were full, they were released to the Earth as capsules which were collected by the US Airforce. 
-## Challenges and opportunities
-- Even after declasification, several camera parameters (eg. scan rate ... ) which are crucial for accurate stereo reconstruction are not fully known. Also, these parameters are expected to change from mission to mission and even for same missions due to changing mechanical properties of the imaging assembly. These difficulties have largely prohibted the use of these images for stereoscopic and general purpose photogrammetric purposes. 
-- In its current form and volume, these images sits as an untapped resoursce for historical earth observation and quantifying change detection. 
+- Optical bar "panoramic" camera assembly onboard the KH-9 mission consisted of moving physical films in 2 rotating cylinders which swept over a common portion on the ground simultaneously giving 2 wide swath (60 to 90 km) panoramic snapshots at different perspectives with an overlap of ~x%.  Once the films in the rolling cylinders were full, they were released to the Earth as capsules which were collected by the US Airforce. 
+
+## Opportunity
+- The images can be processed using modern day photogrammetry tools to produce orthoimages and Digital Elevation Models (DEMs) which can be utilised to **quantify** historical landform evolution (glacier dynamics, landslides, mass wasting (eg. mudflow), volcanic eruptions etc.) at unprecedented sub meter resolution.
+- Currently, majority of the images remain underutilized, sitting in film-cans.
+
+## Challenges
+- Modeling optical bar camera models for stereo reconstruction requires the knowledge of several camera specific parameters such as  camera tilt value, scan rate (rate at which films were moving in the imaging cylinders), scan direction etc.
+Even after declassification, these values are not accurately known. These parameters are expected to be essentially mission specific, changing from mission to mission and even during the same mission due to mechanical changes in the imaging system (system heating, wear and tear of parts), owing to its dynamic mode of image collection.
+- Physical storage in film-cans results in film distortion through time, which needs to be accounted for in the camera models for accurate stereo reconstruction.
 
 ## Workflow
-We have implemented a semi-automatic workflow to process the KH-9 stereoscopic images using the NASA Ames Stereopipeline (ASP). We initialise initial optical bar camera models and iteretively refine them using Bundle adjustment and 3D Coregistration to a reference DEM. The workflow is implemented without the need of manual Ground Control Points incorporation. The main steps are outlined below, with specific commands commented in the shell script (link:) and the ASP user manual.
+We have implemented a semi-automatic workflow to process the Corona (KH-4A,B) and KH-9 panoramic stereoscopic images using the NASA Ames Stereo Pipeline (ASP). We initialise initial optical bar camera models and iteratively refine them using Bundle adjustment and 3D Co-registration to a reference DEM. The workflow is implemented without the requirement of manual Ground Control Points. The main steps are outlined below for a KH-9 sample stereo pair over Mt. St. Helens, WA, USA (July 1982), however it is similar in practice for the KH-4 A,B optical bar imagery. The specific commands are commented in the shell script (link:) and in the ASP user manual.
 
 - Image Preprocessing
-  The images from 1 collect were scanned in parts of 2 to 4 owing to their large size (x * x) cm. We mosaic the sub images into 1 frames using tie-point matching in the adjacent overlapping parts and then crop the mosaiced image to remove the ancillary frame.
+1 image is generally scanned in 2 to 4 sub parts owing to the large size (x * x) cm of the film. We mosaic the sub images into 1 frames using tie-point matching in the adjacent overlapping parts and then crop the mosaiced image to remove the ancillary frame information.
+ ** Figure **
  - Camera initalisation
- Using the corner coordinates information provided by USGS, we initialise draft camera model for the images making up a stereo pair.  
+Using the corner coordinates information provided by USGS, we initialise draft camera model for the images making up a stereo pair.  
  
- - Initial Stero and Geolocation Refinement:
- 
- -----
- 
- - Coarse Extrinsics optimization:
+ - Initial Stereo and Geolocation Refinement:
+We implement stereo reconstruction on the image pair and the initial draft camera, after which the point cloud is aligned to accurate external control source (in this case being TanDEM-X global DEM) using 3D Co-registration (translation, rotation and scale transform). The resultant point cloud/DEM height values are still off, but the orientation and rough geolocation of the DEM is close to the external DEM. This transform to external DEM is carried forward in the next bundle adjustment step.
+ ** Figure **
  
  -----
- - Intrinsics Optmization:
-
------
+ 
+- Coarse Extrinsics optimization:
+We use the technique of bundle adjustment, in which feature matches between the two images are used to refine the camera extrinsic (position and pose) making the cameras consistent with each other. We incorporate external DEM values during bundle adjustment, which essentially serve as Ground Control Points. The updated camera result in improved stereo reconstruction and the resultant DEM is further co-registered to TanDEM-X DEM. 
+** Figure ** 
+ -----
+- Intrinsics Optmization:
+Once the camera position and orientation have been optimised, we optimise the camera intrinsic values by allowing them to float during the bundle adjustment step. The resultant DEM from the intrinsic optimised cameras is already aligned to the external control DEM (TanDEM-X). The updated cameras and the DEM is then used to generate orthoimages from the input image scenes.
+** Figure **
+** Figure with orthoimage **
+ -----
 
  ## Software Requirements
 - NASA AMES Stereo Pipeline
-- to be added.
+- demcoreg, pygeotools.
 
 ## Referemces/Links
 
@@ -40,5 +56,5 @@ We have implemented a semi-automatic workflow to process the KH-9 stereoscopic i
 - Oleg Alexandrov, Scott McMichael (NASA AMES) (Software and Workflow Development, Prototyping)
 - Shashank Bhushan (UW) (Prototyping and workflow implementation)
 
-#TODO: Fill content, add images, add bash script wrapper.
+#TODO: Add images,links,references, dates of mission, add bash script wrapper.
 
