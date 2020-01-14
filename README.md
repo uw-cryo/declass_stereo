@@ -1,8 +1,14 @@
 # declass_stereo
-- Repository containing notes and workflows for photogrammetric processing of declassified images
  
 ## Background 
-During the cold-war era, the US Government had several spy satellites in orbit, obtaining images all around the globe. There were several generations of the mission, such as Corona (KH-4A,4B) from around 1960s to xxxx, the Hexagon KH-9 from the 1970s to xxxx. These satellites contained contained a frame mapping “pinhole” and a pair of stereoscopic panoramic cameras (opticalbar cameras on board the KH-4A,4B, KH-9). The ground sampling distance for the frame camera images is around 5-8 m/px, while that for the panoramic camera images is ~30 to 50 cm/px (comparable to the modern day commercial DigitalGlobe images). During the operational period, the images were captured/stored on physical films which after declassification are being scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earth Explorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates. The archive on USGS is not exhaustive, and a bulk of imagery still needs to digitally scanned and archived. Several teams have utilised the low resolution frame camera images available on the spacecraft, but the high-resolution panoramic stereo imagery is widely untapped. 
+Between the late 1950s and early 1980s, the US Government launched hundreds of reconaissance satellites with optical camera systems. 
+
+Corona (KH-4A,4B) from around 1960s to xxxx
+Hexagon KH-9 from the 1970s to xxxx. 
+
+These satellites contained contained a frame camera intended for terrain mapping and two high-resolution panoramic stereo cameras (Optical Bar Camera). The ground sampling distance for the mapping camera was around 5-8 m, while the panoramic cameras offered ~0.3-2.0 m (comparable to the modern day very-high-resolution commercial imagery). 
+
+Each mission captured images on film which after declassification are being scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earth Explorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates. The archive on USGS is not exhaustive, and a bulk of imagery still needs to digitally scanned and archived. Several teams have utilised the low resolution frame camera images available on the spacecraft, but the high-resolution panoramic stereo imagery is widely untapped. 
 
 ** Figure ** 
 
@@ -21,7 +27,7 @@ Even after declassification, these values are not accurately known. These parame
 - Physical storage in film-cans results in film distortion through time, which needs to be accounted for in the camera models for accurate stereo reconstruction.
 
 ## Workflow
-We have implemented a semi-automatic workflow to process the Corona (KH-4A,B) and KH-9 panoramic stereoscopic images using the NASA Ames Stereo Pipeline (ASP). We initialise initial optical bar camera models and iteratively refine them using Bundle adjustment and 3D Co-registration to a reference DEM. The workflow is implemented without the requirement of manual Ground Control Points. The main steps are outlined below for a KH-9 sample stereo pair over Mt. St. Helens, WA, USA (July 1982), however it is similar in practice for the KH-4 A,B optical bar imagery. The specific commands are commented in the shell script (link:) and in the ASP user manual.
+We implemented a semi-automated workflow to process the Corona (KH-4A/4B) and Hexagon (KH-9) panoramic stereoscopic images using the NASA Ames Stereo Pipeline (ASP). We initialise [optical bar camera models](https://github.com/NeoGeographyToolkit/StereoPipeline/blob/master/src/asp/Camera/OpticalBarModel.cc) and iteratively refine using bundle adjustment and 3-D co-registration to a reference DEM. The workflow does not require manual identification of ground control points (GCPs). The main steps are outlined below for a KH-9 sample stereo pair over Mt. St. Helens, WA, USA, acquired in July 1982.  A similar workflow has also been prototyped for a KH-4B sample. The specific commands are commented in the shell script (link:) and in the ASP user manual.
 
 - Image Preprocessing
 1 image is generally scanned in 2 to 4 sub parts owing to the large size (x * x) cm of the film. We mosaic the sub images into 1 frames using tie-point matching in the adjacent overlapping parts and then crop the mosaiced image to remove the ancillary frame information.
