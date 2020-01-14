@@ -64,8 +64,8 @@ Figure 5: Bundle adjustment for optimising the intrinsics parameter. DEM from up
  -----
 
  ## Software Requirements
-- [NASA AMES Stereo Pipeline][https://github.com/NeoGeographyToolkit/StereoPipeline]
-- [demcoreg][https://github.com/dshean/demcoreg], [pygeotools][https://github.com/dshean/pygeotools].
+- [NASA AMES Stereo Pipeline] [https://github.com/NeoGeographyToolkit/StereoPipeline]
+- [demcoreg] [https://github.com/dshean/demcoreg], [pygeotools] [https://github.com/dshean/pygeotools].
 
 ## Referemces/Links
 
