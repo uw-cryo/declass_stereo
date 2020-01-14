@@ -27,7 +27,7 @@ Even after declassification, these values are not accurately known. These parame
 - Physical storage in film-cans results in film distortion through time, which needs to be accounted for in the camera models for accurate stereo reconstruction.
 
 ## Workflow
-We implemented a semi-automated workflow to process the Corona (KH-4A/4B) and Hexagon (KH-9) panoramic stereoscopic images using the NASA Ames Stereo Pipeline (ASP). We initialise [optical bar camera models](https://github.com/NeoGeographyToolkit/StereoPipeline/blob/master/src/asp/Camera/OpticalBarModel.cc) and iteratively refine using bundle adjustment and 3-D co-registration to a reference DEM. The workflow does not require manual identification of ground control points (GCPs). The main steps are outlined below for a KH-9 sample stereo pair over Mt. St. Helens, WA, USA, acquired in July 1982.  A similar workflow has also been prototyped for a KH-4B sample. The specific commands are commented in the shell script (link:) and in the ASP user manual.
+We implemented a semi-automated workflow to process the Corona (KH-4A/4B) and Hexagon (KH-9) panoramic stereoscopic images using the NASA Ames Stereo Pipeline (ASP). We initialise [optical bar camera models](https://github.com/NeoGeographyToolkit/StereoPipeline/blob/master/src/asp/Camera/OpticalBarModel.cc) and iteratively refine using bundle adjustment and 3-D co-registration to a reference DEM. The workflow does not require manual identification of ground control points (GCPs). The main steps are outlined below for a KH-9 sample stereo pair over Mt. St. Helens, WA, USA, acquired in July 1982.  A similar workflow has also been prototyped for a KH-4B sample. The specific commands are commented in the shell scripts [declass_preproc.sh](https://github.com/uw-cryo/declass_stereo/blob/master/scripts/declass_preproc.sh), [declass_stereo.sh](https://github.com/uw-cryo/declass_stereo/blob/master/scripts/declass_stereo.sh) and in the ASP user manual.
 
 - Image Preprocessing
 1 image is generally scanned in 2 to 4 sub parts owing to the large size (x * x) cm of the film. We mosaic the sub images into 1 frames using tie-point matching in the adjacent overlapping parts and then crop the mosaiced image to remove the ancillary frame information.
@@ -58,7 +58,6 @@ Once the camera position and orientation have been optimised, we optimise the ca
 ![intrinsic_optimise](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/intrinsics.jpg)
 Figure 5: Bundle adjustment for optimising the intrinsics parameter. DEM from updated cameras is in place, with expected height values, without any coregistration requirement.
 
-** Figure with orthoimage **
  -----
 
  ## Software Requirements
