@@ -10,7 +10,6 @@ These satellites contained contained a frame camera intended for terrain mapping
 
 Each mission captured images on film which after declassification are being scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earth Explorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates. The archive on USGS is not exhaustive, and a bulk of imagery still needs to digitally scanned and archived. Several teams have utilised the low resolution frame camera images available on the spacecraft, but the high-resolution panoramic stereo imagery is widely untapped. 
 
-** Figure ** 
 ![hexagon sample](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/Hexagon_Sample.gif)
 
 Figure 1: a) Hexagon Satellite layout, b) film retrieval by US Airforce. Credits: National Reconnaissance Office.
@@ -32,9 +31,8 @@ We implemented a semi-automated workflow to process the Corona (KH-4A/4B) and He
 
 - Image Preprocessing
 1 image is generally scanned in 2 to 4 sub parts owing to the large size (x * x) cm of the film. We mosaic the sub images into 1 frames using tie-point matching in the adjacent overlapping parts and then crop the mosaiced image to remove the ancillary frame information.
- ** Figure **
  
-[[https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/preprocess.jpg|alt=octocat]]
+![preprocess](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/preprocess.jpg)
 Figure 2: Preprocessing involves mosaicing input image subset, cropping the external frame and the orienting the image.
 
  - Camera initalisation
@@ -43,7 +41,7 @@ Using the corner coordinates information provided by USGS, we initialise draft c
  - Initial Stereo and Geolocation Refinement:
 We implement stereo reconstruction on the image pair and the initial draft camera, after which the point cloud is aligned to accurate external control source (in this case being TanDEM-X global DEM) using 3D Co-registration (translation, rotation and scale transform). The resultant point cloud/DEM height values are still off, but the orientation and rough geolocation of the DEM is close to the external DEM. This transform to external DEM is carried forward in the next bundle adjustment step.
 
-[[https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/initial_stereo.jpg|alt=octocat]]
+![init_stereo](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/initial_stereo.jpg)
 Figure 3: Initial stereo DEM, before and after co-registration to external control DEM (TanDEM-X). Note the approximately correct orientation but "off" height values for the DEM.
 
  -----
@@ -51,13 +49,13 @@ Figure 3: Initial stereo DEM, before and after co-registration to external contr
 - Coarse Extrinsics optimization:
 We use the technique of bundle adjustment, in which feature matches between the two images are used to refine the camera extrinsic (position and pose) making the cameras consistent with each other. We incorporate external DEM values during bundle adjustment, which essentially serve as Ground Control Points. The updated camera result in improved stereo reconstruction and the resultant DEM is further co-registered to TanDEM-X DEM. 
 
-[[https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/extrinsics.jpg|alt=octocat]]
+![extrinsic_optimise](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/extrinsics.jpg)
 Figure 4: Bundle adjustment to optimise extrinsics. Note the reduction in the mean pixel residuals for feature matches after bundle adjustment. Co-regitration of DEM from updated cameras results in height values expected within the range of control DEM (TanDEM-X).
 
  -----
 - Intrinsics Optmization:
 Once the camera position and orientation have been optimised, we optimise the camera intrinsic values by allowing them to float during the bundle adjustment step. The resultant DEM from the intrinsic optimised cameras is already aligned to the external control DEM (TanDEM-X). The updated cameras and the DEM is then used to generate orthoimages from the input image scenes.
-[[https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/intrinsics.jpg|alt=octocat]]
+![intrinsic_optimise](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/intrinsics.jpg)
 Figure 5: Bundle adjustment for optimising the intrinsics parameter. DEM from updated cameras is in place, with expected height values, without any coregistration requirement.
 
 ** Figure with orthoimage **
