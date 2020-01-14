@@ -71,5 +71,4 @@ Figure 5: Bundle adjustment for optimising the intrinsics parameter. DEM from up
 - Oleg Alexandrov, Scott McMichael (NASA AMES) (Software and Workflow Development, Prototyping)
 - Shashank Bhushan (UW) (Prototyping and workflow implementation)
 
-#TODO: Add images,links,references, dates of mission, add bash script wrapper.
 
