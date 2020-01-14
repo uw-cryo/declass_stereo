@@ -29,7 +29,7 @@ eval historical_helper.py crop_op --input-path $pre_out --output-path $outfn --i
 init_camera=${outfn%.*}_init_obc.tsai
 cor_coord='-123.335 46.407 -122.031 46.278 -122.1 46.1 -123.368 46.25'
 cam_gen_opt=""
-cam_gen_opt+=" -camera-type opticalbar --refine-camera"
+cam_gen_opt+=" --camera-type opticalbar --refine-camera"
 echo "generating initial optical bar camera"
 eval cam_gen $cam_gen_opt --sample-file $sample_tsai --lon-lat-values $cor_coord --reference-dem $refdem $outfn -o $init_camera
 echo "Script is complete !"
