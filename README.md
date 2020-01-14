@@ -11,7 +11,7 @@ These satellites contained contained a frame camera intended for terrain mapping
 Each mission captured images on film which after declassification are being scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earth Explorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates. The archive on USGS is not exhaustive, and a bulk of imagery still needs to digitally scanned and archived. Several teams have utilised the low resolution frame camera images available on the spacecraft, but the high-resolution panoramic stereo imagery is widely untapped. 
 
 ** Figure ** 
-[[https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/Hexagon_Sample.gif|alt=octocat]]
+![hexagon sample](https://github.com/uw-cryo/declass_stereo/blob/master/declass_readme_images/Hexagon_Sample.gif)
 
 Figure 1: a) Hexagon Satellite layout, b) film retrieval by US Airforce. Credits: National Reconnaissance Office.
 
