@@ -36,7 +36,7 @@ pc_init=$(realpath $init_stereo_dir/*-PC.tif)
 un_disp_1=$(realpath $init_stereo_dir/*unaligned-D.tif)
 
 #Create coarse gridded DEM from point cloud
-point2dem $pc_init --t_srs $epsg --tr $coarse_tr
+point2dem $pc_init --t_srs $epsg --tr $coarse_tr -errorimage
 dem_1=$(realpath $init_stereo_dir/*-DEM.tif)
 
 #Align coarse DEM to reference DEM
@@ -64,7 +64,7 @@ stereo $img1 $img2 $cam1_ex $cam2_ex --alignment-method affineepipolar --unalign
 #Create updated coarse gridded DEM
 pc_ex=$(realpath $stereo_dir2/*-PC.tif)
 un_disp_2=$(realpath $stereo_dir2/*unaligned-D.tif)
-point2dem $pc_ex --t_srs $epsg --tr $coarse_tr 
+point2dem $pc_ex --t_srs $epsg --tr $coarse_tr  --errorimage 
 dem_2=$(realpath $stereo_dir_2/*-DEM.tif)
 
 #Align updated coarse DEM to reference DEM
@@ -83,10 +83,13 @@ cam2_in=$ba_dir_2/run-*$cam2_ex
 stereo_dir_3=$outdir/stereo_in
 stereo $img1 $img2 $cam1_in $cam2_in --alignment-method affineepipolar --unalign-disparity $stereo_dir_3/run
 pc_in=$(realpath $stereo_dir3/*-PC.tif)
+l_img=$(realpath $stereo_dir3/*-L.tif)
 
-#Create final gridded DEM at fine resolution
-point2dem $pc_in --t_srs $epsg --tr $fine_tr
+#Create final gridded DEM and confirming orthoimage at fine resolution
+point2dem $pc_in $l_img --t_srs $epsg --tr $fine_tr --orthoimage -errorimage
 dem_fin=$(realpath $stereo_dir3/*-DEM.tif)
+ortho_fin=$(realpath $stereo_dir3/*-DRG.tif)
+#At this stage, since our cameras still do not confirm to the reference DEM 100%, our best shot at orthoimage is one from point2dem
 
 #Create ortho image from left image
 #TODO: create orthoimages from both inputs, use original filenames, not "left/right"
