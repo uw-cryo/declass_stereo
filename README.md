@@ -1,5 +1,8 @@
 # declass_stereo
- 
+
+Repo containing early tools, documentation and results on pilot study using ASP to process declassified spy satellite images from Corona and Hexagon programs.
+See README and [overview slides from March 2019 presentation](doc/shean_declass_20190306_trim.pdf). We hope to improve ASP support for these historical datasets in the coming years - please reach out to discuss potential opportunities, especially funding options to support ASP developer time.
+
 ## Background 
 Between the late 1950s and early 1980s, the US Government launched hundreds of reconaissance satellites with optical camera systems. 
 
