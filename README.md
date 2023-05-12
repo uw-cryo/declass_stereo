@@ -64,14 +64,13 @@ Figure 5: Bundle adjustment for optimising the intrinsics parameter. DEM from up
  -----
 
  ## Software Requirements
-- [NASA AMES Stereo Pipeline](https://github.com/NeoGeographyToolkit/StereoPipeline)
+- [NASA Ames Stereo Pipeline](https://github.com/NeoGeographyToolkit/StereoPipeline)
 - [demcoreg](https://github.com/dshean/demcoreg), [pygeotools](https://github.com/dshean/pygeotools).
 
 ## Referemces/Links
 
-## Workflow Development Team
-- David Shean (UW) (Design and Technical Direction)
-- Oleg Alexandrov, Scott McMichael (NASA AMES) (Software and Workflow Development, Prototyping)
-- Shashank Bhushan (UW) (Prototyping and workflow implementation)
-
-
+## Development Team
+- David Shean (UW) - Project management and technical direction
+- Oleg Alexandrov, Scott McMichael (NASA ARC) - Software and workflow development, testing
+- Shashank Bhushan (UW) - Workflow implementation, prototyping
+- Amaury Dehecq (NASA JPL, now IGE) - Advising, development of mapping camera workflow
