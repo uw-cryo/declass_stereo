@@ -1,17 +1,21 @@
 # declass_stereo
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7931323.svg)](https://doi.org/10.5281/zenodo.7931323)
 
-Repo containing early tools, documentation and results on pilot study using ASP to process declassified spy satellite images from Corona and Hexagon programs.
-See README and [overview slides from March 2019 presentation](doc/shean_declass_20190306_trim.pdf). We hope to improve ASP support for these historical datasets in the coming years - please reach out to discuss potential opportunities, especially funding options to support ASP developer time.
+This repo contains preliminary tools, documentation, and results from a pilot study conducted by the University of Washington and developers at the NASA Ames Research Center to add support for processing declassified spy satellite images from the Corona and Hexagon programs using the Ames Stereo Pipeline (ASP).
+
+See the README and [overview slides from a March 2019 presentation](doc/shean_declass_20190306_trim.pdf) for more details.
+
+We hope to improve ASP support for these historical datasets in the coming years - please reach out to discuss potential opportunities, especially funding options to support ASP developer time.
 
 ## Background 
-Between the late 1950s and early 1980s, the US Government launched hundreds of reconaissance satellites with optical camera systems. 
+Between the late 1950s and early 1980s, the U.S. Government launched hundreds of reconaissance satellites with high-resolution optical camera systems. 
 
 Corona (KH-4A,4B) around 1960s.
 Hexagon KH-9 from the 1970s to late 1980s. 
 
-These satellites contained contained a frame camera intended for terrain mapping and two high-resolution panoramic stereo cameras (Optical Bar Camera). The ground sampling distance for the mapping camera was around 5-8 m, while the panoramic cameras offered ~0.3-2.0 m (comparable to the modern day very-high-resolution commercial imagery). 
+These satellites included a frame camera system intended for terrain mapping and two high-resolution panoramic stereo cameras (Optical Bar Camera). The ground sampling distance for the mapping cameras was around 5-8 m, while the panoramic cameras offered ~0.3-2.0 m (comparable to the modern day very-high-resolution commercial satellite imagery). 
 
-Each mission captured images on film which after declassification are being scanned and digitally archived by the National Archive and USGS. The scanned images are available freely on USGS Earth Explorer, with approximate geolocation information (correct to 100s of m) provided as corner coordinates. The archive on USGS is not exhaustive, and a bulk of imagery still needs to digitally scanned and archived. Several teams have utilised the low resolution frame camera images available on the spacecraft, but the high-resolution panoramic stereo imagery is widely untapped. 
+Each mission captured images on analog film which was retrieved after reentry. Copies of the film are being scanned and digitally archived by the USGS and the National Archives and Records Administration (NARA). The declassified images are available from the USGS EarthExplorer platform, with approximate corner geolocation information (accuracy of 100s of m). Several teams have developed processing pipelines for the mapping camera systems (e.g., [Dehecq et al., 2020](https://www.frontiersin.org/articles/10.3389/feart.2020.566802/full)), but the potential for the high-resolution images from the much more complex panoramic stereo cameras remains largely untapped. 
 
 ![hexagon sample](/doc/img/Hexagon_Sample.gif)
 
